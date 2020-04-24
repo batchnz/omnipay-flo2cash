@@ -1,0 +1,39 @@
+{
+    "name": "batchnz/omnipay-flo2cash",
+    "type": "library",
+    "description": "Flo2Cash gateway for Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "flo2cash",
+        "batch",
+        "purchase"
+    ],
+    "homepage": "https://github.com/batchnz/omnipay-flo2cash",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josh Smith",
+            "email": "josh@batch.nz"
+        },
+        {
+            "name": "Batch Development",
+            "homepage": "https://www.batch.nz"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Flo2Cash\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "^3"
+    },
+    "require-dev": {
+        "omnipay/tests": "^3",
+        "squizlabs/php_codesniffer": "^3",
+        "phpro/grumphp": "^0.14"
+    },
+    "prefer-stable": true
+}
