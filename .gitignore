@@ -3,7 +3,7 @@ composer.lock
 composer.phar
 phpunit.xml
 .idea/
-
+.DS_Store
 .directory
 dirlist.app
 dirlist.vendor
