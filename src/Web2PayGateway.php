@@ -326,6 +326,37 @@ class Web2PayGateway extends AbstractGateway
         return $this->getParameter('returnOption');
     }
 
+    /**
+     * Whether to use the shopping cart or not
+     * @author Josh Smith <josh@batch.nz>
+     * @param  boolean $value
+     */
+    public function setUseShoppingCart($value)
+    {
+        return $this->setParameter('useShoppingCart', $value);
+    }
+
+    public function getUseShoppingCart()
+    {
+        return $this->getParameter('useShoppingCart');
+    }
+
+    /**
+     * Passing this variable (value must be “1”) will allow you to collect customer information from the Flo2Cash Web Payments shopping cart page.
+     * The customer information will then be posted back to your notification URL
+     * Optional
+     * @var int
+     */
+    public function setCustomerInfoRequired($value)
+    {
+        return $this->setParameter('customerInfoRequired', $value);
+    }
+
+    public function getCustomerInfoRequired()
+    {
+        return $this->getParameter('customerInfoRequired');
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Flo2Cash\Message\Web2PayPurchaseRequest', $parameters);

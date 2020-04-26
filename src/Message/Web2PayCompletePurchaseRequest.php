@@ -93,6 +93,26 @@ class Web2PayCompletePurchaseRequest extends AbstractRequest
         return $this->getParameter('responseText');
     }
 
+    public function setResponseMessage($value)
+    {
+        $this->setParameter('responseMessage', $value);
+    }
+
+    public function getResponseMessage()
+    {
+        $this->getParameter('responseMessage');
+    }
+
+    public function setCustomerEmail($value)
+    {
+        $this->setParameter('customerEmail', $value);
+    }
+
+    public function getCustomerEmail()
+    {
+        $this->getParameter('customerEmail');
+    }
+
     /**
      * The response code is a legacy field and is now superseded by the txn_status field as above.
      * The values for the response_code are:
@@ -171,6 +191,46 @@ class Web2PayCompletePurchaseRequest extends AbstractRequest
         return $this->getParameter('cardToken');
     }
 
+    public function setDate($value)
+    {
+        $this->setParameter('date', $value);
+    }
+
+    public function getDate()
+    {
+        return $this->getParameter('date');
+    }
+
+    public function setCheckoutId($value)
+    {
+        $this->setParameter('checkoutId', $value);
+    }
+
+    public function getCheckoutId()
+    {
+        return $this->getParameter('checkoutId');
+    }
+
+    public function setSessionId($value)
+    {
+        $this->setParameter('sessionId', $value);
+    }
+
+    public function getSessionId()
+    {
+        return $this->getParameter('sessionId');
+    }
+
+    public function setBlockedReason($value)
+    {
+        $this->setParameter('blockedReason', $value);
+    }
+
+    public function getBlockedReason()
+    {
+        return $this->getParameter('blockedReason');
+    }
+
     /**
      * This is a SHA1 hash of the data that we pass back to you plus your secret hash key.
      * @author Josh Smith <josh@batch.nz>
@@ -197,6 +257,8 @@ class Web2PayCompletePurchaseRequest extends AbstractRequest
             'particular'                => $this->getParticular(),
             'card_type'                 => $this->getCardType(),
             'response_text'             => $this->getResponseText(),
+            'response_message'          => $this->getResponseMessage(),
+            'customer_email'            => $this->getCustomerEmail(),
             'response_code'             => $this->getResponseCode(),
             'amount'                    => $this->getAmount(),
             'authorisation_code'        => $this->getAuthorisationCode(),
@@ -204,6 +266,10 @@ class Web2PayCompletePurchaseRequest extends AbstractRequest
             'error_message'             => $this->getErrorMessage(),
             'custom_data'               => $this->getCustomData(),
             'card_token'                => $this->getCardToken(),
+            'date'                      => $this->getDate(),
+            'checkout_id'               => $this->getCheckoutId(),
+            'session_id'                => $this->getSessionId(),
+            'blocked_reason'            => $this->getBlockedReason(),
             'payment_provider_verifier' => $this->getPaymentProviderVerifier(),
         ];
     }

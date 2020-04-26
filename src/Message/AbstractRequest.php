@@ -197,6 +197,60 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
          return $this->getParameter('returnOption');
     }
 
+    public function setUseShoppingCart($value)
+    {
+        return $this->setParameter('useShoppingCart',  $value);
+    }
+
+    public function getUseShoppingCart()
+    {
+         return $this->getParameter('useShoppingCart');
+    }
+
+    public function setCustomerInfoRequired($value)
+    {
+        return $this->setParameter('customerInfoRequired',  $value);
+    }
+
+    public function getCustomerInfoRequired()
+    {
+         return $this->getParameter('customerInfoRequired');
+    }
+
+    public function getBaseData()
+    {
+        $data = [];
+
+        $data['cmd'] = $this->getUseShoppingCart() ?  '_xcart' : '_xclick';
+
+        if( $this->getUseShoppingCart() && $this->getCustomerInfoRequired() ){
+            $data['customer_info_required'] = '1';
+        }
+
+        return $data;
+    }
+
+    /**
+     * Returns data for the items
+     * @author Josh Smith <josh@batch.nz>
+     * @return array
+     */
+    public function getItemData()
+    {
+        $data = [];
+        $items = $this->getItems()->all();
+
+        foreach ($items as $i => $item) {
+            $pos = $i+1;
+            $data["item_name$pos"] = $items[$i]->getName();
+            $data["item_code$pos"] = $items[$i]->getCode();
+            $data["item_price$pos"] = $items[$i]->getPrice();
+            $data["item_qty$pos"] = $items[$i]->getQuantity();
+        }
+
+        return $data;
+    }
+
     /**
      * Set the items in this order
      *
@@ -218,9 +272,20 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function calcMerchantVerifier()
     {
-        $data = [
-            trim($this->getAccountId()),
-            trim($this->getAmount()),
+        $data = [trim($this->getAccountId())];
+
+        if( !$this->getUseShoppingCart() ){
+            $data[] = trim($this->getAmount());
+        } else {
+            foreach ($this->getItemData() as $key => $value) {
+                if( preg_match('/item_(price|qty)([0-9]+)/', $key) ){
+                    $data[] = trim($value);
+                }
+            }
+            $data[] = $this->getCustomerInfoRequired() ? '1' : '';
+        }
+
+        $data = array_merge($data, [
             trim($this->getReference()),
             trim($this->getParticular()),
             trim($this->getReturnUrl()),
@@ -228,7 +293,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             trim($this->getCustomData()),
             trim($this->getPaymentMethod()),
             trim($this->getSecretKey())
-        ];
+        ]);
 
         // Implement C# style hashing
         $strToHash = implode('', $data);

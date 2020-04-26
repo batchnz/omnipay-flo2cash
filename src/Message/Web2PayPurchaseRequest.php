@@ -14,13 +14,10 @@ class Web2PayPurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('amount', 'returnUrl');
-        // $data = $this->getBaseData();
-        // $data = array_merge($data, $this->getItemData());
+        $data = $this->getBaseData();
 
-        $data['cmd'] = $this->getCmd();
         $data['account_id'] = $this->getAccountId();
         $data['amount'] = $this->getAmount();
-        // $data['item_name'] = $this->getItemName();
         $data['reference'] = $this->getReference();
         $data['particular'] = $this->getParticular();
         $data['return_url'] = $this->getReturnUrl();
@@ -33,6 +30,8 @@ class Web2PayPurchaseRequest extends AbstractRequest
         $data['display_customer_email'] = $this->getDisplayCustomerEmail();
         $data['payment_method'] = $this->getPaymentMethod();
         $data['merchant_verifier'] = $this->calcMerchantVerifier();
+
+        $data = array_merge($data, $this->getItemData());
 
         // Remove unused data properties
         foreach ($data as $key => $value) {

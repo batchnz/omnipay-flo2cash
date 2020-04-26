@@ -11,6 +11,13 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Web2PayCompletePurchaseResponse extends AbstractResponse
 {
+    const TXN_STATUS_UNKNOWN = 0;
+    const TXN_STATUS_PROCESSING = 1;
+    const TXN_STATUS_SUCCESSFUL = 2;
+    const TXN_STATUS_FAILED = 3;
+    const TXN_STATUS_BLOCKED = 4;
+    const TXN_STATUS_DECLINED = 11;
+
     protected $message = '';
 
     public function __construct(RequestInterface $request, $data)
@@ -26,9 +33,9 @@ class Web2PayCompletePurchaseResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        // This option requires no further processing
-        if( $this->request->getReturnOption() === Gateway::RETURN_OPTION_DISPLAY_IN_WEBPAYMENTS ){
-            return true;
+        // Bail if we don't have a valid success status
+        if( $this->request->getTxnStatus() !== self::TXN_STATUS_SUCCESSFUL ) {
+            return false;
         }
 
         // Verify the transaction
@@ -81,26 +88,26 @@ class Web2PayCompletePurchaseResponse extends AbstractResponse
     public function verifyTransaction()
     {
         $data = [
-            trim($this->data['txn_id'] ?? ''),
-            trim($this->data['receipt_no'] ?? ''),
-            trim($this->data['txn_status'] ?? ''),
-            trim($this->data['account_id'] ?? ''),
-            trim($this->data['reference'] ?? ''),
-            trim($this->data['particular'] ?? ''),
-            trim($this->data['card_type'] ?? ''),
-            trim($this->data['amount'] ?? ''),
-            trim($this->data['response_code'] ?? ''),
-            trim($this->data['response_text'] ?? ''),
-            trim($this->data['customer_email'] ?? ''),
-            trim($this->data['authorisation_code'] ?? ''),
-            trim($this->data['error_message'] ?? ''),
-            trim($this->data['error_code'] ?? ''),
-            trim($this->data['custom_data'] ?? ''),
-            trim($this->data['card_token'] ?? ''),
-            trim($this->data['date'] ?? ''),
-            trim($this->data['checkout_id'] ?? ''),
-            trim($this->data['session_id'] ?? ''),
-            trim($this->data['blocked_reason'] ?? ''),
+            trim($this->request->getTxnId()),
+            trim($this->request->getReceiptNo()),
+            trim($this->request->getTxnStatus()),
+            trim($this->request->getAccountId()),
+            trim($this->request->getReference()),
+            trim($this->request->getParticular()),
+            trim($this->request->getCardType()),
+            trim($this->request->getAmount()),
+            trim($this->request->getResponseCode()),
+            trim($this->request->getResponseText()),
+            trim($this->request->getCustomerEmail()),
+            trim($this->request->getAuthorisationCode()),
+            trim($this->request->getErrorMessage()),
+            trim($this->request->getErrorCode()),
+            trim($this->request->getCustomData()),
+            trim($this->request->getCardToken()),
+            trim($this->request->getDate()),
+            trim($this->request->getCheckoutId()),
+            trim($this->request->getSessionId()),
+            trim($this->request->getBlockedReason()),
             trim($this->request->getSecretKey())
         ];
 
