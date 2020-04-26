@@ -11,333 +11,190 @@ use Omnipay\Flo2Cash\Flo2CashItemBag;
 
 /**
  * Flo2Cash Abstract Request
- *
- * This class forms the base class for Flo2Cash Web Payments Checkout and Pro Checkout
- * requests.  These are also known as "Payflow Gateway" requests and also
- * "Flo2Cash Classic APIs".
- *
- * According to the Flo2Cash documentation:
- *
- * * This is the recommended way to integrate when you want to accept payments
- *   with a completely customizable solution. This integration method leverages
- *   the Flo2Cash Payflow Gateway to transmit payments your Flo2Cash Internet Merchant
- *   Account; it also gives the merchant the flexibility to change payment
- *   processors without having to re-do their technical integration. When using
- *   Flo2Cash Payments Pro (Payflow Edition) using Payflow Gateway integration,
- *   merchants can use Transparent Redirect feature to help manage PCI compliance.
- *
- * @link https://developer.paypal.com/docs/classic/products/payflow-gateway/
- * @link https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
- * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/
- * @link https://devtools-paypal.com/integrationwizard/
- * @link http://paypal.github.io/sdk/
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    const API_VERSION = '119.0';
+    // Public Methods
+    // =========================================================================
 
-    protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
-    protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-
-    /**
-     * @var bool
-     */
-    protected $negativeAmountAllowed = true;
-
-    public function getUsername()
+    public function setCmd($value)
     {
-        return $this->getParameter('username');
+        return $this->setParameter('cmd',  $value);
     }
 
-    public function setUsername($value)
+    public function getCmd()
     {
-        return $this->setParameter('username', $value);
+         return $this->getParameter('cmd');
     }
 
-    public function getPassword()
+    public function setAccountId($value)
     {
-        return $this->getParameter('password');
+        return $this->setParameter('accountId',  $value);
     }
 
-    public function setPassword($value)
+    public function getAccountId()
     {
-        return $this->setParameter('password', $value);
+         return $this->getParameter('accountId');
     }
 
-    public function getSignature()
+    public function setAmount($value)
     {
-        return $this->getParameter('signature');
+        return $this->setParameter('amount',  $value);
     }
 
-    public function setSignature($value)
+    public function getAmount()
     {
-        return $this->setParameter('signature', $value);
+         return $this->getParameter('amount');
     }
 
-    public function getSubject()
+    public function setItemName($value)
     {
-        return $this->getParameter('subject');
+        return $this->setParameter('itemName',  $value);
     }
 
-    public function setSubject($value)
+    public function getItemName()
     {
-        return $this->setParameter('subject', $value);
+         return $this->getParameter('itemName');
     }
 
-    public function getSolutionType()
+    public function setReference($value)
     {
-        return $this->getParameter('solutionType');
+        return $this->setParameter('reference',  $value);
     }
 
-    public function setSolutionType($value)
+    public function getReference()
     {
-        return $this->setParameter('solutionType', $value);
+         return $this->getParameter('reference');
     }
 
-    public function getLandingPage()
+    public function setParticular($value)
     {
-        return $this->getParameter('landingPage');
+        return $this->setParameter('particular',  $value);
     }
 
-    public function setLandingPage($value)
+    public function getParticular()
     {
-        return $this->setParameter('landingPage', $value);
+         return $this->getParameter('particular');
     }
 
-    public function getHeaderImageUrl()
+    public function setReturnUrl($value)
     {
-        return $this->getParameter('headerImageUrl');
+        return $this->setParameter('returnUrl',  $value);
     }
 
-    public function setHeaderImageUrl($value)
+    public function getReturnUrl()
     {
-        return $this->setParameter('headerImageUrl', $value);
+         return $this->getParameter('returnUrl');
     }
 
-    public function getLogoImageUrl()
+    public function setNotificationUrl($value)
     {
-        return $this->getParameter('logoImageUrl');
+        return $this->setParameter('notificationUrl',  $value);
     }
 
-    public function setLogoImageUrl($value)
+    public function getNotificationUrl()
     {
-        return $this->setParameter('logoImageUrl', $value);
+         return $this->getParameter('notificationUrl');
     }
 
-    public function getBorderColor()
+    public function setHeaderImage($value)
     {
-        return $this->getParameter('borderColor');
+        return $this->setParameter('headerImage',  $value);
     }
 
-    public function setBorderColor($value)
+    public function getHeaderImage()
     {
-        return $this->setParameter('borderColor', $value);
+         return $this->getParameter('headerImage');
     }
 
-    public function getBrandName()
+    public function setHeaderBottomBorder($value)
     {
-        return $this->getParameter('brandName');
+        return $this->setParameter('headerBottomBorder',  $value);
     }
 
-    public function setBrandName($value)
+    public function getHeaderBottomBorder()
     {
-        return $this->setParameter('brandName', $value);
+         return $this->getParameter('headerBottomBorder');
     }
 
-    public function getNoShipping()
+    public function setHeaderBackgroundColour($value)
     {
-        return $this->getParameter('noShipping');
+        return $this->setParameter('headerBackgroundColour',  $value);
     }
 
-    public function setNoShipping($value)
+    public function getHeaderBackgroundColour()
     {
-        return $this->setParameter('noShipping', $value);
+         return $this->getParameter('headerBackgroundColour');
     }
 
-    public function getAllowNote()
+    public function setCustomData($value)
     {
-        return $this->getParameter('allowNote');
+        return $this->setParameter('customData',  $value);
     }
 
-    public function setAllowNote($value)
+    public function getCustomData()
     {
-        return $this->setParameter('allowNote', $value);
+         return $this->getParameter('customData');
     }
 
-    public function getAddressOverride()
+    public function setStoreCard($value)
     {
-        return $this->getParameter('addressOverride');
+        return $this->setParameter('storeCard',  $value);
     }
 
-    public function setAddressOverride($value)
+    public function getStoreCard()
     {
-        return $this->setParameter('addressOverride', $value);
+         return $this->getParameter('storeCard');
     }
 
-    public function getMaxAmount()
+    public function setDisplayCustomerEmail($value)
     {
-        return $this->getParameter('maxAmount');
+        return $this->setParameter('displayCustomerEmail',  $value);
     }
 
-    public function setMaxAmount($value)
+    public function getDisplayCustomerEmail()
     {
-        return $this->setParameter('maxAmount', $value);
+         return $this->getParameter('displayCustomerEmail');
     }
 
-    public function getTaxAmount()
+    public function setPaymentMethod($value)
     {
-        return $this->getParameter('taxAmount');
+        return $this->setParameter('paymentMethod',  $value);
     }
 
-    public function setTaxAmount($value)
+    public function getPaymentMethod()
     {
-        return $this->setParameter('taxAmount', $value);
+         return $this->getParameter('paymentMethod');
     }
 
-    public function getShippingAmount()
+    public function setMerchantVerifier($value)
     {
-        return $this->getParameter('shippingAmount');
+        return $this->setParameter('merchantVerifier',  $value);
     }
 
-    public function setShippingAmount($value)
+    public function getMerchantVerifier()
     {
-        return $this->setParameter('shippingAmount', $value);
+         return $this->getParameter('merchantVerifier');
     }
 
-    public function getHandlingAmount()
+    public function setSecretKey($value)
     {
-        return $this->getParameter('handlingAmount');
+        return $this->setParameter('secretKey',  $value);
     }
 
-    public function setHandlingAmount($value)
+    public function getSecretKey()
     {
-        return $this->setParameter('handlingAmount', $value);
+         return $this->getParameter('secretKey');
     }
 
-    public function getShippingDiscount()
+    public function setReturnOption($value)
     {
-        return $this->getParameter('shippingDiscount');
+        return $this->setParameter('returnOption',  $value);
     }
 
-    public function setShippingDiscount($value)
+    public function getReturnOption()
     {
-        return $this->setParameter('shippingDiscount', $value);
-    }
-
-    public function getInsuranceAmount()
-    {
-        return $this->getParameter('insuranceAmount');
-    }
-
-    public function setInsuranceAmount($value)
-    {
-        return $this->setParameter('insuranceAmount', $value);
-    }
-
-    public function getLocaleCode()
-    {
-        return $this->getParameter('localeCode');
-    }
-
-    /*
-     * Used to change the locale of Flo2Cash pages.
-     * Accepts 2 or 5 character language codes as described here:
-     * https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECCustomizing/
-     *
-     * If no value/invalid value is passed, the gateway will default it for you
-    */
-    public function setLocaleCode($value)
-    {
-        return $this->setParameter('localeCode', $value);
-    }
-
-    public function setCustomerServiceNumber($value)
-    {
-        return $this->setParameter('customerServiceNumber', $value);
-    }
-
-    public function getCustomerServiceNumber()
-    {
-        return $this->getParameter('customerServiceNumber');
-    }
-
-    public function setSellerPaypalAccountId($value)
-    {
-        return $this->setParameter('sellerPaypalAccountId', $value);
-    }
-
-    public function getSellerPaypalAccountId()
-    {
-        return $this->getParameter('sellerPaypalAccountId');
-    }
-
-    /**
-     * The Button Source (BN Code) is for Flo2Cash Partners taking payments for a 3rd party
-     */
-    public function setButtonSource($value)
-    {
-        return $this->setParameter('ButtonSource', $value);
-    }
-
-    public function getButtonSource()
-    {
-        return $this->getParameter('ButtonSource');
-    }
-
-    protected function getBaseData()
-    {
-        $data = array();
-        $data['VERSION'] = static::API_VERSION;
-        $data['USER'] = $this->getUsername();
-        $data['PWD'] = $this->getPassword();
-        $data['SIGNATURE'] = $this->getSignature();
-        $data['SUBJECT'] = $this->getSubject();
-        $bnCode = $this->getButtonSource();
-        if (!empty($bnCode)) {
-            $data['BUTTONSOURCE'] = $bnCode;
-        }
-
-        return $data;
-    }
-
-    protected function getItemData()
-    {
-        $data = array();
-        $items = $this->getItems();
-        if ($items) {
-            $data["PAYMENTREQUEST_0_ITEMAMT"] = 0;
-            foreach ($items as $n => $item) {
-                $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
-                $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
-                $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
-                $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
-                if ($item instanceof Flo2CashItem) {
-                    $data["L_PAYMENTREQUEST_0_NUMBER$n"] = $item->getCode();
-                }
-
-                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
-            }
-            $data["PAYMENTREQUEST_0_ITEMAMT"] = $this->formatCurrency($data["PAYMENTREQUEST_0_ITEMAMT"]);
-        }
-
-        return $data;
-    }
-
-    public function sendData($data)
-    {
-        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($data, '', '&'));
-
-        return $this->createResponse($httpResponse->getBody()->getContents());
-    }
-
-    protected function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-    }
-
-    protected function createResponse($data)
-    {
-        return $this->response = new Response($this, $data);
+         return $this->getParameter('returnOption');
     }
 
     /**
@@ -352,5 +209,46 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         return $this->setParameter('items', $items);
+    }
+
+    /**
+     * Calculates the merchange verifier property
+     * @author Josh Smith <josh@batch.nz>
+     * @return string
+     */
+    public function calcMerchantVerifier()
+    {
+        $data = [
+            trim($this->getAccountId()),
+            trim($this->getAmount()),
+            trim($this->getReference()),
+            trim($this->getParticular()),
+            trim($this->getReturnUrl()),
+            trim($this->getNotificationUrl()),
+            trim($this->getCustomData()),
+            trim($this->getPaymentMethod()),
+            trim($this->getSecretKey())
+        ];
+
+        // Implement C# style hashing
+        $strToHash = implode('', $data);
+        $utfString = mb_convert_encoding($strToHash, "UTF-8");
+        $hashTag = sha1($utfString, true);
+        $base64Tag = base64_encode($hashTag);
+
+        return $base64Tag;
+    }
+
+    public function sendData($data)
+    {
+        return $this->createResponse($data);
+    }
+
+    // Protected Methods
+    // =========================================================================
+
+    protected function createResponse($data)
+    {
+        return $this->response = new Response($this, $data);
     }
 }

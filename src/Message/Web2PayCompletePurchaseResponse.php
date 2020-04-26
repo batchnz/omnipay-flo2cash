@@ -2,11 +2,23 @@
 
 namespace Omnipay\Flo2Cash\Message;
 
+use Omnipay\Flo2Cash\Web2PayGateway as Gateway;
+use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
+
 /**
  * Flo2Cash Web Payments Complete Payment Response
  */
-class Web2PayCompletePurchaseResponse extends Web2PayAuthorizeResponse
+class Web2PayCompletePurchaseResponse extends AbstractResponse
 {
+    protected $message = '';
+
+    public function __construct(RequestInterface $request, $data)
+    {
+        parent::__construct($request, $data);
+        $this->message = $this->data['response_text'];
+    }
+
     /*
      * Is this complete purchase response successful? Will not be successful if it's a redirect response.
      *
@@ -14,31 +26,90 @@ class Web2PayCompletePurchaseResponse extends Web2PayAuthorizeResponse
      */
     public function isSuccessful()
     {
-        $success = isset($this->data['ACK']) && in_array($this->data['ACK'], array('Success', 'SuccessWithWarning'));
-        return !$this->isRedirect() && $success;
+        // This option requires no further processing
+        if( $this->request->getReturnOption() === Gateway::RETURN_OPTION_DISPLAY_IN_WEBPAYMENTS ){
+            return true;
+        }
+
+        // Verify the transaction
+        $verifiedTransaction = $this->verifyTransaction();
+
+        if( $verifiedTransaction === false ){
+            $this->message = 'Unable to verify transaction.';
+        }
+
+        return $verifiedTransaction;
     }
 
     /**
-     * The complete purchase response can be in error where it wants to have your customer return to paypal.
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function isRedirect()
+    public function getMessage()
     {
-        return isset($this->data['L_ERRORCODE0']) && in_array($this->data['L_ERRORCODE0'], array('10486'));
+        return $this->message;
     }
 
     /**
-     * The transaction reference obtained from the purchase() call can't be used to refund a purchase.
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getTransactionReference()
     {
-        if ($this->isSuccessful() && isset($this->data['PAYMENTINFO_0_TRANSACTIONID'])) {
-            return $this->data['PAYMENTINFO_0_TRANSACTIONID'];
-        }
+        return $this->data['receipt_no'];
+    }
 
-        return parent::getTransactionReference();
+    /**
+     * @inheritdoc
+     */
+    public function getTransactionId()
+    {
+        return $this->data['txn_id'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCode()
+    {
+        return $this->data['authorisation_code'];
+    }
+
+    /**
+     * Verifies the response from the gateway hasn't been tampered with
+     * @author Josh Smith <josh@batch.nz>
+     * @return boolean
+     */
+    public function verifyTransaction()
+    {
+        $data = [
+            trim($this->data['txn_id'] ?? ''),
+            trim($this->data['receipt_no'] ?? ''),
+            trim($this->data['txn_status'] ?? ''),
+            trim($this->data['account_id'] ?? ''),
+            trim($this->data['reference'] ?? ''),
+            trim($this->data['particular'] ?? ''),
+            trim($this->data['card_type'] ?? ''),
+            trim($this->data['amount'] ?? ''),
+            trim($this->data['response_code'] ?? ''),
+            trim($this->data['response_text'] ?? ''),
+            trim($this->data['customer_email'] ?? ''),
+            trim($this->data['authorisation_code'] ?? ''),
+            trim($this->data['error_message'] ?? ''),
+            trim($this->data['error_code'] ?? ''),
+            trim($this->data['custom_data'] ?? ''),
+            trim($this->data['card_token'] ?? ''),
+            trim($this->data['date'] ?? ''),
+            trim($this->data['checkout_id'] ?? ''),
+            trim($this->data['session_id'] ?? ''),
+            trim($this->data['blocked_reason'] ?? ''),
+            trim($this->request->getSecretKey())
+        ];
+
+        // Implement C# style hashing
+        $strToHash = implode('', $data);
+        $utfString = mb_convert_encoding($strToHash, "UTF-8");
+        $hashTag = sha1($utfString, true);
+        $base64Tag = base64_encode($hashTag);
+
+        return $base64Tag === $this->data['payment_provider_verifier'];
     }
 }
