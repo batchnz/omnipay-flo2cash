@@ -85,7 +85,7 @@ class Web2PayCompletePurchaseRequest extends AbstractRequest
      */
     public function setResponseText($value)
     {
-        $this->setParameter('responseText', $value);
+        return $this->setParameter('responseText', $value);
     }
 
     public function getResponseText()
@@ -95,22 +95,22 @@ class Web2PayCompletePurchaseRequest extends AbstractRequest
 
     public function setResponseMessage($value)
     {
-        $this->setParameter('responseMessage', $value);
+        return $this->setParameter('responseMessage', $value);
     }
 
     public function getResponseMessage()
     {
-        $this->getParameter('responseMessage');
+        return $this->getParameter('responseMessage');
     }
 
     public function setCustomerEmail($value)
     {
-        $this->setParameter('customerEmail', $value);
+        return $this->setParameter('customerEmail', $value);
     }
 
     public function getCustomerEmail()
     {
-        $this->getParameter('customerEmail');
+        return $this->getParameter('customerEmail');
     }
 
     /**
