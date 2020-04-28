@@ -2,7 +2,7 @@
     "name": "batchnz/omnipay-flo2cash",
     "type": "library",
     "description": "Flo2Cash gateway for Omnipay payment processing library",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "keywords": [
         "gateway",
         "merchant",
