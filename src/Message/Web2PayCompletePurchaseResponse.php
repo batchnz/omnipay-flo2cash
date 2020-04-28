@@ -34,7 +34,7 @@ class Web2PayCompletePurchaseResponse extends AbstractResponse
     public function isSuccessful()
     {
         // Bail if we don't have a valid success status
-        if( $this->request->getTxnStatus() !== self::TXN_STATUS_SUCCESSFUL ) {
+        if( (int) $this->request->getTxnStatus() !== self::TXN_STATUS_SUCCESSFUL ) {
             return false;
         }
 
@@ -88,27 +88,27 @@ class Web2PayCompletePurchaseResponse extends AbstractResponse
     public function verifyTransaction()
     {
         $data = [
-            trim($this->request->getTxnId()),
-            trim($this->request->getReceiptNo()),
-            trim($this->request->getTxnStatus()),
-            trim($this->request->getAccountId()),
-            trim($this->request->getReference()),
-            trim($this->request->getParticular()),
-            trim($this->request->getCardType()),
-            trim($this->request->getAmount()),
-            trim($this->request->getResponseCode()),
-            trim($this->request->getResponseText()),
-            trim($this->request->getCustomerEmail()),
-            trim($this->request->getAuthorisationCode()),
-            trim($this->request->getErrorMessage()),
-            trim($this->request->getErrorCode()),
-            trim($this->request->getCustomData()),
-            trim($this->request->getCardToken()),
-            trim($this->request->getDate()),
-            trim($this->request->getCheckoutId()),
-            trim($this->request->getSessionId()),
-            trim($this->request->getBlockedReason()),
-            trim($this->request->getSecretKey())
+            trim((string) $this->request->getTxnId()),
+            trim((string) $this->request->getReceiptNo()),
+            trim((string) $this->request->getTxnStatus()),
+            trim((string) $this->request->getAccountId()),
+            trim((string) $this->request->getReference()),
+            trim((string) $this->request->getParticular()),
+            trim((string) $this->request->getCardType()),
+            trim((string) $this->request->getAmount()),
+            trim((string) $this->request->getResponseCode()),
+            trim((string) $this->request->getResponseText()),
+            trim((string) $this->request->getCustomerEmail()),
+            trim((string) $this->request->getAuthorisationCode()),
+            trim((string) $this->request->getErrorMessage()),
+            trim((string) $this->request->getErrorCode()),
+            trim((string) $this->request->getCustomData()),
+            trim((string) $this->request->getCardToken()),
+            trim((string) $this->request->getDate()),
+            trim((string) $this->request->getCheckoutId()),
+            trim((string) $this->request->getSessionId()),
+            trim((string) $this->request->getBlockedReason()),
+            trim((string) $this->request->getSecretKey())
         ];
 
         // Implement C# style hashing
