@@ -31,7 +31,9 @@ class Web2PayPurchaseRequest extends AbstractRequest
         $data['payment_method'] = $this->getPaymentMethod();
         $data['merchant_verifier'] = $this->calcMerchantVerifier();
 
-        $data = array_merge($data, $this->getItemData());
+        if( $this->getUseShoppingCart() ) {
+            $data = array_merge($data, $this->getItemData());
+        }
 
         // Remove unused data properties
         foreach ($data as $key => $value) {

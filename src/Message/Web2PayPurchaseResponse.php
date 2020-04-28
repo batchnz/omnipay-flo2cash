@@ -11,7 +11,8 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Web2PayPurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
-    protected $endpoint = 'https://secure.flo2cash.co.nz/web2pay/default.aspx';
+    protected $liveEndpoint = 'https://secure.flo2cash.co.nz/web2pay/default.aspx';
+    protected $sandboxEndpoint = 'https://sandbox.flo2cash.com/web2pay/default.aspx';
 
     public function isSuccessful()
     {
@@ -40,6 +41,6 @@ class Web2PayPurchaseResponse extends AbstractResponse implements RedirectRespon
 
     protected function getEndpoint()
     {
-        return $this->endpoint;
+        return $this->getRequest()->getTestMode() ? $this->sandboxEndpoint : $this->liveEndpoint;
     }
 }

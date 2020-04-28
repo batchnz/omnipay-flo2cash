@@ -217,6 +217,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
          return $this->getParameter('customerInfoRequired');
     }
 
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
     public function getBaseData()
     {
         $data = [];
@@ -238,14 +248,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getItemData()
     {
         $data = [];
-        $items = $this->getItems()->all();
+        $items = $this->getItems();
+        if( empty($items) ) return [];
 
-        foreach ($items as $i => $item) {
+        foreach ($items->getIterator() as $i => $item) {
             $pos = $i+1;
-            $data["item_name$pos"] = $items[$i]->getName();
-            $data["item_code$pos"] = $items[$i]->getCode();
-            $data["item_price$pos"] = $items[$i]->getPrice();
-            $data["item_qty$pos"] = $items[$i]->getQuantity();
+            $data["item_name$pos"] = $item->getName();
+            $data["item_code$pos"] = $item->getCode();
+            $data["item_price$pos"] = $item->getPrice();
+            $data["item_qty$pos"] = $item->getQuantity();
         }
 
         return $data;

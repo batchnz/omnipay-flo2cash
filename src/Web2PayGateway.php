@@ -357,6 +357,16 @@ class Web2PayGateway extends AbstractGateway
         return $this->getParameter('customerInfoRequired');
     }
 
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Flo2Cash\Message\Web2PayPurchaseRequest', $parameters);
