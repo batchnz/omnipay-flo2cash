@@ -24,7 +24,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getCmd()
     {
-         return $this->getParameter('cmd');
+        return $this->getParameter('cmd');
     }
 
     public function setAccountId($value)
@@ -34,7 +34,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getAccountId()
     {
-         return $this->getParameter('accountId');
+        return $this->getParameter('accountId');
     }
 
     public function setAmount($value)
@@ -44,7 +44,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getAmount()
     {
-         return $this->getParameter('amount');
+        return $this->getParameter('amount');
     }
 
     public function setItemName($value)
@@ -54,7 +54,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getItemName()
     {
-         return $this->getParameter('itemName');
+        return $this->getParameter('itemName');
     }
 
     public function setReference($value)
@@ -64,7 +64,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getReference()
     {
-         return $this->getParameter('reference');
+        return $this->getParameter('reference');
     }
 
     public function setParticular($value)
@@ -74,7 +74,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getParticular()
     {
-         return $this->getParameter('particular');
+        return $this->getParameter('particular');
     }
 
     public function setReturnUrl($value)
@@ -84,7 +84,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getReturnUrl()
     {
-         return $this->getParameter('returnUrl');
+        return $this->getParameter('returnUrl');
     }
 
     public function setNotificationUrl($value)
@@ -94,7 +94,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getNotificationUrl()
     {
-         return $this->getParameter('notificationUrl');
+        return $this->getParameter('notificationUrl');
     }
 
     public function setHeaderImage($value)
@@ -104,7 +104,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getHeaderImage()
     {
-         return $this->getParameter('headerImage');
+        return $this->getParameter('headerImage');
     }
 
     public function setHeaderBottomBorder($value)
@@ -114,7 +114,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getHeaderBottomBorder()
     {
-         return $this->getParameter('headerBottomBorder');
+        return $this->getParameter('headerBottomBorder');
     }
 
     public function setHeaderBackgroundColour($value)
@@ -124,7 +124,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getHeaderBackgroundColour()
     {
-         return $this->getParameter('headerBackgroundColour');
+        return $this->getParameter('headerBackgroundColour');
     }
 
     public function setCustomData($value)
@@ -134,7 +134,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getCustomData()
     {
-         return $this->getParameter('customData');
+        return $this->getParameter('customData');
     }
 
     public function setStoreCard($value)
@@ -144,7 +144,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getStoreCard()
     {
-         return $this->getParameter('storeCard');
+        return $this->getParameter('storeCard');
     }
 
     public function setDisplayCustomerEmail($value)
@@ -154,7 +154,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getDisplayCustomerEmail()
     {
-         return $this->getParameter('displayCustomerEmail');
+        return $this->getParameter('displayCustomerEmail');
     }
 
     public function setPaymentMethod($value)
@@ -164,7 +164,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getPaymentMethod()
     {
-         return $this->getParameter('paymentMethod');
+        return $this->getParameter('paymentMethod');
     }
 
     public function setMerchantVerifier($value)
@@ -174,7 +174,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getMerchantVerifier()
     {
-         return $this->getParameter('merchantVerifier');
+        return $this->getParameter('merchantVerifier');
     }
 
     public function setSecretKey($value)
@@ -184,7 +184,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getSecretKey()
     {
-         return $this->getParameter('secretKey');
+        return $this->getParameter('secretKey');
     }
 
     public function setReturnOption($value)
@@ -194,7 +194,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getReturnOption()
     {
-         return $this->getParameter('returnOption');
+        return $this->getParameter('returnOption');
     }
 
     public function setUseShoppingCart($value)
@@ -204,7 +204,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getUseShoppingCart()
     {
-         return $this->getParameter('useShoppingCart');
+        return $this->getParameter('useShoppingCart');
     }
 
     public function setCustomerInfoRequired($value)
@@ -214,7 +214,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getCustomerInfoRequired()
     {
-         return $this->getParameter('customerInfoRequired');
+        return $this->getParameter('customerInfoRequired');
     }
 
     public function setTestMode($value)
@@ -297,13 +297,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         $data = array_merge($data, [
-            trim($this->getReference()),
-            trim($this->getParticular()),
-            trim($this->getReturnUrl()),
-            trim($this->getNotificationUrl()),
-            trim($this->getCustomData()),
-            trim($this->getPaymentMethod()),
-            trim($this->getSecretKey())
+            trim((string) $this->getReference()),
+            trim((string) $this->getParticular()),
+            trim((string) $this->getReturnUrl()),
+            trim((string) $this->getNotificationUrl()),
+            trim((string) $this->getCustomData()),
+            trim((string) $this->getPaymentMethod()),
+            trim((string) $this->getSecretKey())
         ]);
 
         // Implement C# style hashing
